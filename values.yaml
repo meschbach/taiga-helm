@@ -350,7 +350,7 @@ taigaGateway:
   image:
     repository: nginx    
     pullPolicy: IfNotPresent
-    tag: "1.19-alpine"
+    tag: "1.25-alpine"
 
   persistence:
     ## Volume used to store the Taiga Gateway's data. Default is boolean `false`.
