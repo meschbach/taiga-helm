@@ -18,6 +18,9 @@ metadata:
   {{- end }}
 spec:
 {{- if .Values.taigaGateway.ingress.tls }}
+  {{- if .Values.taigaGateway.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.taigaGateway.ingress.ingressClassName }}
+  {{- end }}
   tls:
   {{- range .Values.taigaGateway.ingress.tls }}
     - hosts:
