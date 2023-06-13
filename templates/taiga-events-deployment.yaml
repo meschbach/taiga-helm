@@ -1,12 +1,11 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name:  {{ include "taiga.fullname" . }}-events
   labels:
     {{- include "taiga.labels" . | nindent 4 }}
     app.kubernetes.io/component: taiga-events
 spec:
-  serviceName: {{ template "taiga.fullname" . }}-events
   replicas: 1
   selector:
     matchLabels:
@@ -44,6 +43,8 @@ spec:
               value: taiga
             - name: TAIGA_SECRET_KEY
               value: taiga-back-secret-key
+            - name: RABBITMQ_URL
+              value: "amqp://taiga:taiga@{{ template "taiga.fullname" . }}-events-rabbitmq:{{  .Values.taigaAsyncRabbitmq.service.port }}/{{ .Values.env.rabbitmqVhost }}"
           {{- with .Values.taigaEvents.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
